@@ -79,8 +79,7 @@ namespace WebApp.Controllers
                     Body = "<h1>This is a test email.</h1><p>Hello, this is a test email sent from the EmailService class.</p> </br> doğrulama link : " + callbackUrl
                 };
                 EmailService service = new EmailService();
-                service.SendEmailAsync(email);
-
+               await service.SendEmailAsync(email);
                 return RedirectToAction("Login", new { ReturnUrl = "/" });
             }
             else
