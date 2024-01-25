@@ -1,50 +1,188 @@
 ﻿@model RegisterDto
 
-<div class="text-center my-3">
-    <h6 class="display-6">
-        <i class="fa-solid text-white fa-user-plus bg-secondary rounded"></i>
-        <br />
-        Register
 
-    </h6>
-</div>
+<link rel="stylesheet" href="~/assets/vendors/select2/select2.min.css" />
+<link rel="stylesheet" href="~/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css" />
 
-<div class="row">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-6">
 
-        <div>
-            <div class="text-danger" asp-validation-summary="All"></div>
+<link rel="stylesheet" href="~/assets/vendors/mdi/css/materialdesignicons.min.css" />
+<link rel="stylesheet" href="~/assets/vendors/flag-icon-css/css/flag-icon.min.css" />
+<link rel="stylesheet" href="~/assets/vendors/css/vendor.bundle.base.css" />
+<link rel="stylesheet" href="~/assets/vendors/select2/select2.min.css" />
+<link rel="stylesheet" href="~/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css" />
+<link rel="stylesheet" href="~/assets/css/style.css" />
+<link rel="shortcut icon" href="~/assets/images/favicon.png" />
+
+
+
+<div class="col-12 grid-margin">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">User Register</h4>
+            <form class="form-sample" asp-controller="Account" asp-action="RegisterUser" method="post">
+                <p class="card-description">Personal info</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">First Name</label>
+                            <div class="col-sm-9">
+                                <input asp-for="FirstName" type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Last Name</label>
+                            <div class="col-sm-9">
+                                <input asp-for="LastName" type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Gender</label>
+                            <div class="col-sm-9">
+                                <select class="form-control">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Date of Birth</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" placeholder="dd/mm/yyyy" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Skills</label>
+                           
+                                <div class="col-sm-9">
+                                <label>Select Skills</label>
+                                <select asp-for="Skills" class="js-example-basic-multiple" multiple="multiple" style="width: 100%;">
+                                    <option value="C#">C#</option>
+                                    <option value=".Net Core">.Net Core</option>
+                                    <option value="java">java</option>
+                                    <option value="SQL">SQL</option>
+                                    <option value="Oracle">Oracle</option>
+                                    <option value="Javascript">Javascript</option>
+                                    <option value="Css">Css</option>
+                                    <option value="HTML">HTML</option>
+                                </select>
+                                </div>
+                           
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Membership</label>
+                            <div class="col-sm-4">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="" checked /> Free
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2" /> Professional
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="card-description">Address</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Address 1</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Address1" type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Email" type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Address 2</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Address2" type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Password" type="password" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">City</label>
+                            <div class="col-sm-9">
+                                <input asp-for="City" type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Country</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Country" type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-icon-text">
+                        <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit
+                    </button>
+                </div>
+            </form>
         </div>
-
-
-        <form method="post" asp-action="Register">
-
-            <input type="hidden" />
-
-            <div class="form-group my-3">
-                <label asp-for="UserName">User Name</label>
-                <input asp-for="UserName" class="form-control" />
-            </div>
-
-            <div class="form-group my-3">
-                <label asp-for="Email">Email </label>
-                <input asp-for="Email" class="form-control" />
-            </div>
-
-            <div class="form-group my-3">
-                <label asp-for="Password"></label>
-                <input type="password" asp-for="Password" class="form-control" />
-            </div>
-
-            <div class="form-group my-3 d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa-solid fa-user-plus"></i>
-                    Login
-                </button>
-            </div>
-        </form>
     </div>
-    <div class="col-md-3"></div>
 </div>
+
+
+
+
+
+
+<script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="~/assets/vendors/select2/select2.min.js"></script>
+<script src="~/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="~/assets/js/off-canvas.js"></script>
+<script src="~/assets/js/hoverable-collapse.js"></script>
+<script src="~/assets/js/misc.js"></script>
+<script src="~/assets/js/file-upload.js"></script>
+<script src="~/assets/js/typeahead.js"></script>
+<script src="~/assets/js/select2.js"></script>
+
+<script>
+    
+</script>

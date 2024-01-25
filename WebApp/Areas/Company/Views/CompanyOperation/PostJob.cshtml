@@ -1,0 +1,227 @@
+﻿
+@model List<JobPost>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+
+
+<div class="col-md-10 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Job Info</h4>
+          
+           
+                <div class="form-group">
+                    <label for="exampleInputUsername1">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="title" />
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="exampleInputUsername1">
+                        Short Description
+                    </label>
+                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="short description" />
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleTextarea1">Description</label>
+                    <textarea class="form-control"
+                              id="description"
+                              rows="4"></textarea>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="exampleInputUsername1">Money $</label>
+                    <input type="number" class="form-control" id="money" placeholder="$" />
+                </div>
+               
+
+
+
+                <div class="form-check form-check-flat form-check-primary">
+                    <label class="form-check-label">
+                        <input id="jobActive" type="checkbox" class="form-check-input" /> Active
+                    </label>
+                </div>
+
+
+
+                <button id="submitForm" type="submit" class="btn btn-primary mr-2"> Save </button>
+           
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="col-md-10 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Company Jobs</h4>
+           
+            <div class="table-responsive">
+                <table id="jobpostTable" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Short Description</th>
+                            <th>Money</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.ShortDescription</td>
+                                    <td class="text-danger">
+                                        @item.Money% <i class="mdi mdi-arrow-down"></i>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+
+                     
+                       
+                       
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+
+      
+
+        $('#submitForm').click(function () {
+            //event.preventDefault();
+
+            var title = $('#title').val().trim();
+            var shortDescription = $('#exampleInputUsername1').val().trim();
+            var description = $('#description').val().trim();
+            var money = $('#money').val().trim();
+            var isActive = $('.form-check-input').is(':checked');
+
+            if (title === '' || shortDescription === '' || description === '' || money === '') {
+                if (title === '') {
+                    $('#title').css('border-color', 'red');
+                } else {
+                    $('#title').css('border-color', ''); 
+                }
+                if (shortDescription === '') {
+                    $('#exampleInputUsername1').css('border-color', 'red');
+                } else {
+                    $('#exampleInputUsername1').css('border-color', ''); 
+                }
+                if (description === '') {
+                    $('#description').css('border-color', 'red');
+                } else {
+                    $('#description').css('border-color', ''); 
+                }
+                if (money === '') {
+                    $('#money').css('border-color', 'red');
+                } else {
+                    $('#money').css('border-color', ''); 
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Boş Alanlar!',
+                    text: 'Lütfen tüm alanları doldurun.',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Tamam'
+                });
+
+                return; 
+            }
+
+            console.log(title);
+            const data = {
+                id: 0,
+                title: title,
+                description: description,
+                shortDescription: shortDescription,
+                money: money,
+                isActive: true
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/Company/CompanyOperation/SaveOrUpdateCompany',
+                data: {data:data},
+                success: function (response) {
+
+                    if (response === true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı!',
+                            text: 'İşlem başarıyla tamamlandı.',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(function () {
+                            location.reload();
+                           
+                        });
+                    } else {
+                    }
+
+
+                },
+                error: function (error) {
+                    console.error('Hata! ', error);
+                }
+            });
+
+        });
+
+
+
+
+        var jobpostTable = new DataTable('#jobpostTable');
+
+      /*  var jobpostTable = $('#jobpostTable').DataTable({
+            "ajax": {
+                "url": "", 
+                "type": "GET", 
+                "dataSrc": "" 
+            },
+            "columns": [
+                { "data": "Id" },
+                { "data": "Title" },
+                { "data": "Description" },
+                { "data": "ShortDescription" },
+                { "data": "Money" },
+                { "data": "IsActive" }
+                // Sütunlarınızı veriye göre uygun şekilde burada tanımlayın
+            ]
+        });*/
+
+
+
+    });
+</script>

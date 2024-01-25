@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Repositories.EFCore;
 using Services.Contracts;
 using Services;
+using Entities.Models;
+using Repositories.Contracts;
+using Repositories;
 
 namespace WebApp.Infrastructure.Extension
 {
@@ -13,23 +16,23 @@ namespace WebApp.Infrastructure.Extension
 
             services.AddDbContext<RepositoryContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("ef-SqlConnection")
-                    , b => b.MigrationsAssembly("WebApp"));
-                options.EnableSensitiveDataLogging(true);//hasas bilgiler (developer mod için)
+                options.UseSqlServer(configuration.GetConnectionString("DatabaseConnection")
+                     /*b  b.MigrationsAssembly("WebApp")*/);
+                options.EnableSensitiveDataLogging(true);
             });
         }
 
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+            services.AddIdentity<User, IdentityRole>(options => {
 
                 options.SignIn.RequireConfirmedEmail = false;//e-mail onaylamadığı sürece oturum açma durumu
-                options.User.RequireUniqueEmail = true; //e-mail adresleri gerekli olsun mu
+                options.User.RequireUniqueEmail = true; 
                 //şifre Oluşturma
-                options.Password.RequireUppercase = false;//büyük harf gereksin mi
-                options.Password.RequireLowercase = false;
-                options.Password.RequireDigit = false; //Rakam gereksin mi
+                options.Password.RequireUppercase = true;//büyük harf gereksin mi
+                options.Password.RequireLowercase = true;
+                options.Password.RequireDigit = true; //Rakam gereksin mi
                 options.Password.RequiredLength = 6;//şifre uzunluğu
 
             }).AddEntityFrameworkStores<RepositoryContext>();
@@ -45,16 +48,28 @@ namespace WebApp.Infrastructure.Extension
                 options.Cookie.Name = "WebApp.Session";
                 options.IdleTimeout = TimeSpan.FromDays(1);
             });
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();//kullanıcıların sürekli bu nesneden üretmesine gerek yok
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
          
         }
 
 
         public static void ConfigureServiceRegistration(this IServiceCollection services)
         {
-       
+            services.AddScoped<IServiceManager,ServiceManager>();
             services.AddScoped<IAutService, AutService>();
+            services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<IJobService, JobPostService>();
         }
+
+        public static void ConfigureRepositoryRegistration(this IServiceCollection services)
+        {
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IJobPostRepository, JobPostRepository>();
+        }
+
+
     }
 
 

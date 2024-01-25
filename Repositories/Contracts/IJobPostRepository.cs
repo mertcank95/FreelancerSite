@@ -1,0 +1,15 @@
+﻿using Entities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Repositories.Contracts
+{
+    public interface IJobPostRepository:IRepositoryBase<JobPost>
+    {
+        void SaveJobPost(JobPost jobPost);
+        IQueryable<JobPost> GetAllJobs();
+    }
+}

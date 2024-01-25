@@ -4,8 +4,7 @@ namespace WebApp.Models
 {
     public class LoginModel
     {
-        //logini e-mail ilede gerçekleştirilebilir 
-        //burada isim ile gerçekleştirdik
+        
 
         private string? _returnUrl;
 
@@ -14,6 +13,7 @@ namespace WebApp.Models
 
         [Required(ErrorMessage = "Password is required.")]
         public string? Password { get; set; }
+        public bool IsPersistent { get; set; }
         public string ReturnUrl
         {
             get

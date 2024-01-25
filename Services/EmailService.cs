@@ -25,12 +25,6 @@ namespace Services
                     {
                         message.From = new MailAddress(_emailData.SenderEmail, "Admin");
                     }
-                    else
-                    {
-                        // If fromEmail is not provided, use the default SMTP credentials.
-                       // message.From = new MailAddress(_username, fromName);
-                    }
-
                     message.Subject = _emailData.Subject;
                     message.Body = _emailData.Body;
                     message.IsBodyHtml = true;
